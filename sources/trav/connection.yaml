@@ -1,0 +1,8 @@
+# This file was automatically generated
+name: trav
+type: mysql
+options:
+  database: trav20250208
+  host: 92.205.3.167
+  port: 3306
+  user: patrick

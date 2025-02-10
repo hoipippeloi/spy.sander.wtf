@@ -1,0 +1,201 @@
+# Entity Relationship Diagram Documentation - Travian Game Database
+
+## 1. Core Game Entities
+
+### 1.1 Users (s1_users)
+Primary Key: id
+Relationships:
+- 1:N with Villages (s1_vdata) through owner
+- 1:1 with Hero (s1_hero) through uid
+- N:1 with Alliance (s1_alidata) through alliance
+- 1:N with Messages (s1_mdata) through owner/target
+- 1:N with Links (s1_links) through userid
+Key Fields:
+- username (unique)
+- email (unique)
+- tribe
+- alliance
+- access level
+
+### 1.2 Villages (s1_vdata)
+Primary Key: wref
+Relationships:
+- N:1 with Users through owner
+- 1:1 with Field Data (s1_fdata) through wref
+- 1:N with Buildings (s1_bdata) through wid
+- 1:1 with Units (s1_units) through vref
+Key Fields:
+- owner
+- name
+- capital
+- pop (population)
+- resources (wood, clay, iron, crop)
+
+### 1.3 Alliances (s1_alidata)
+Primary Key: id
+Relationships:
+- 1:N with Users through alliance
+- 1:N with Alliance Permissions (s1_ali_permission)
+- 1:N with Alliance Diplomacy (s1_diplomacy)
+Key Fields:
+- name
+- tag
+- leader
+- description
+
+## 2. Military System
+
+### 2.1 Units (s1_units)
+Primary Key: vref
+Relationships:
+- N:1 with Villages through vref
+Key Fields:
+- Unit counts (u1-u50)
+- Hero presence
+
+### 2.2 Movements (s1_movement)
+Primary Key: moveid
+Relationships:
+- N:1 with Villages (from/to)
+Key Fields:
+- from
+- to
+- type
+- endtime
+- resources
+
+### 2.3 Attacks (s1_attacks)
+Primary Key: id
+Relationships:
+- N:1 with Villages through vref
+Key Fields:
+- Unit composition
+- attack_type
+- timing
+
+## 3. Resource Management
+
+### 3.1 Market (s1_market)
+Primary Key: id
+Relationships:
+- N:1 with Villages through vref
+Key Fields:
+- resource types
+- amounts
+- merchant count
+- alliance restrictions
+
+### 3.2 Resources (s1_fdata)
+Primary Key: vref
+Relationships:
+- 1:1 with Villages
+Key Fields:
+- Field levels (f1-f40)
+- Field types (f1t-f40t)
+
+## 4. Building System
+
+### 4.1 Buildings (s1_bdata)
+Primary Key: id
+Relationships:
+- N:1 with Villages through wid
+Key Fields:
+- field
+- type
+- level
+- timestamp
+
+### 4.2 Construction (s1_build_log)
+Primary Key: id
+Relationships:
+- N:1 with Villages through wid
+Key Fields:
+- log
+- date
+
+## 5. Communication System
+
+### 5.1 Messages (s1_mdata)
+Primary Key: id
+Relationships:
+- N:1 with Users (sender/receiver)
+Key Fields:
+- owner
+- target
+- topic
+- message
+- time
+
+### 5.2 Forum System
+#### 5.2.1 Categories (s1_forum_cat)
+Primary Key: id
+Relationships:
+- N:1 with Alliances
+- 1:N with Topics
+
+#### 5.2.2 Topics (s1_forum_topic)
+Primary Key: id
+Relationships:
+- N:1 with Categories
+- 1:N with Posts
+
+#### 5.2.3 Posts (s1_forum_post)
+Primary Key: id
+Relationships:
+- N:1 with Topics
+- N:1 with Users
+
+## 6. Hero System
+
+### 6.1 Hero (s1_hero)
+Primary Key: heroid
+Relationships:
+- 1:1 with Users through uid
+Key Fields:
+- experience
+- health
+- attributes
+- status
+
+## 7. Administrative
+
+### 7.1 Logs
+Multiple log tables tracking:
+- Login attempts (s1_login_log)
+- Building actions (s1_build_log)
+- Market transactions (s1_market_log)
+- Admin actions (s1_admin_log)
+- Illegal actions (s1_illegal_log)
+
+### 7.2 Configuration
+- Global settings (s1_config)
+- Game rules and parameters
+
+## Key Relationships Summary
+
+1. User-Centric:
+   - User → Villages (1:N)
+   - User → Alliance (N:1)
+   - User → Hero (1:1)
+
+2. Village-Centric:
+   - Village → Buildings (1:N)
+   - Village → Units (1:1)
+   - Village → Resources (1:1)
+
+3. Alliance-Centric:
+   - Alliance → Users (1:N)
+   - Alliance → Diplomacy (1:N)
+   - Alliance → Forum (1:N)
+
+4. Military:
+   - Village → Movements (1:N)
+   - Village → Attacks (1:N)
+   - Village → Enforcement (1:N)
+
+5. Economic:
+   - Village → Market (1:N)
+   - Village → Resources (1:1)
+   - Village → Trade Routes (1:N)
+
+This ERD represents the complex relationships between different entities in the Travian game system, showing how data is interconnected to create a comprehensive gaming experience. 
