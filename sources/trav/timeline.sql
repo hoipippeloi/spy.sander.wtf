@@ -1,14 +1,11 @@
 SELECT 
-    'Online Activity' as activity_type,
-    o.name as username,
-    DATE_FORMAT(FROM_UNIXTIME(o.time), '%d-%m-%Y %H:%i:%s') as formatted_time,
-    CASE 
-        WHEN o.sit = 1 THEN 'User logged in (Sitter Mode)'
-        ELSE 'User logged in'
-    END as description
+    'Login Activity' as activity_type,
+    u.username as username,
+    DATE_FORMAT(o.date, '%d-%m-%Y %H:%i:%s') as formatted_time,
+    'User logged in' as description
 FROM 
-    s1_online o
-WHERE o.name not in ('multihunter')
+    s1_login_log o
+    JOIN s1_users u ON o.uid = u.id
 
 UNION
 
@@ -23,4 +20,4 @@ FROM
     JOIN s1_users u ON v.owner = u.id
 
 ORDER BY 
-    STR_TO_DATE(formatted_time, '%d-%m-%Y %H:%i:%s') DESC;
+    STR_TO_DATE(formatted_time, '%d-%m-%Y %H:%i:%s') DESC
