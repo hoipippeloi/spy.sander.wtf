@@ -3,6 +3,7 @@ name: 15m update
 on:
   schedule:
     - cron: '55/15 * * * *'
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
