@@ -19,10 +19,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Run sources
         env:
-          NODE_OPTIONS: --max-old-space-size=4096 --experimental-json-modules
-        run: npm run sources && npm run build
+          NODE_OPTIONS: --max-old-space-size=8192 --experimental-json-modules
+        run: |
+          echo "Starting sources update..."
+          npm run sources || exit 1
+          echo "Sources update completed successfully"
+
+      - name: Build project
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192 --experimental-json-modules
+        run: |
+          echo "Starting build process..."
+          npm run build || exit 1
+          echo "Build completed successfully"
 
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
