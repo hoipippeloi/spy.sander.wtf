@@ -1,11 +1,8 @@
 # This file was automatically generated
-type: mysql
 name: trav
+type: mysql
 options:
   database: trav20250210
   host: 92.205.3.167
   port: 3306
   user: patrick
-# Advanced Options, you probably don't want to change this
-buildOptions:
-  batchSize: 1000000
