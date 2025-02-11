@@ -1,6 +1,6 @@
 {
-  "name": "travian-spy",
-  "version": "1.0",
+  "name": "my-evidence-project",
+  "version": "0.0.1",
   "scripts": {
     "build": "evidence build",
     "build:strict": "evidence build:strict",
@@ -36,9 +36,5 @@
     "trim@<0.0.3": ">0.0.3",
     "sqlite3": "5.1.5",
     "axios": "^1.7.4"
-  },
-  "devDependencies": {
-    "flowbite": "^3.1.2",
-    "flowbite-svelte": "^0.47.4"
   }
 }
