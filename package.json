@@ -2,7 +2,7 @@
   "name": "travian-spy",
   "version": "1.0",
   "scripts": {
-    "build": "evidence sources && evidence build",
+    "build": "evidence build",
     "build:strict": "evidence build:strict",
     "dev": "evidence dev --open /",
     "test": "evidence build",
