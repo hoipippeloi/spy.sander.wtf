@@ -17,28 +17,6 @@ jobs:
           curl -s ifconfig.me
           echo ""
 
-      - name: Install MySQL client
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y mysql-client
-
-      - name: Network connectivity test
-        run: |
-          echo "Testing network connectivity..."
-          host=${{ secrets.MYSQL_HOST }}
-          port=${{ secrets.MYSQL_PORT }}
-          nc -zv $host $port 2>&1 || echo "Cannot reach $host:$port"
-
-      - name: Test MySQL connection
-        run: |
-          echo "Testing MySQL connection..."
-          mysql -h ${{ secrets.MYSQL_HOST }} \
-               -P ${{ secrets.MYSQL_PORT }} \
-               -u ${{ secrets.MYSQL_USER }} \
-               -p${{ secrets.MYSQL_PASSWORD }} \
-               -e "SELECT 1;" 2>&1 || { echo "MySQL connection failed with error: $?"; exit 1; }
-          echo "MySQL connection successful!"
-
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
         with:
