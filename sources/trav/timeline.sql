@@ -1,7 +1,7 @@
 SELECT 
     'Login Activity' as activity_type,
     u.username as username,
-    DATE_FORMAT(o.date, '%d-%m-%Y %H:%i:%s') as formatted_time,
+    DATE_FORMAT(DATE_ADD(o.date, INTERVAL 8 HOUR), '%d-%m-%Y %H:%i:%s') as formatted_time,
     'User logged in' as description
 FROM 
     s1_login_log o
@@ -12,7 +12,7 @@ UNION
 SELECT 
     'Building Activity' as activity_type,
     u.username,
-    DATE_FORMAT(FROM_UNIXTIME(UNIX_TIMESTAMP(bl.date)), '%d-%m-%Y %H:%i:%s') as formatted_time,
+    DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(UNIX_TIMESTAMP(bl.date)), INTERVAL 8 HOUR), '%d-%m-%Y %H:%i:%s') as formatted_time,
     bl.log as description
 FROM 
     s1_build_log bl
