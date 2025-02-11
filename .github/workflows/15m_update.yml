@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Check External IP
+        run: |
+          echo "External IP Address:"
+          curl -s ifconfig.me
+          echo ""
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
         with:
