@@ -22,14 +22,21 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mysql-client
 
-      - name: Test MySQL Connection
+      - name: Network connectivity test
+        run: |
+          echo "Testing network connectivity..."
+          host=${{ secrets.MYSQL_HOST }}
+          port=${{ secrets.MYSQL_PORT }}
+          nc -zv $host $port 2>&1 || echo "Cannot reach $host:$port"
+
+      - name: Test MySQL connection
         run: |
           echo "Testing MySQL connection..."
-          mysql -h ${{ secrets.DB_HOST }} \
-               -P ${{ secrets.DB_PORT }} \
-               -u ${{ secrets.DB_USER }} \
-               -p${{ secrets.DB_PASS }} \
-               -e "SELECT * FROM s1_login_log LIMIT 10;" 2>/dev/null || { echo "Failed to connect to MySQL"; exit 1; }
+          mysql -h ${{ secrets.MYSQL_HOST }} \
+               -P ${{ secrets.MYSQL_PORT }} \
+               -u ${{ secrets.MYSQL_USER }} \
+               -p${{ secrets.MYSQL_PASSWORD }} \
+               -e "SELECT 1;" 2>&1 || { echo "MySQL connection failed with error: $?"; exit 1; }
           echo "MySQL connection successful!"
 
       - name: Use Node.js 18.x
