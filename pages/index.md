@@ -11,7 +11,7 @@ select
   username,
   formatted_time,
   description
-from trav.timeline
+from travian.timeline
 order by formatted_time desc
 ```
 
