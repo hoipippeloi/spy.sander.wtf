@@ -24,25 +24,14 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=8192 --experimental-json-modules
         run: |
           echo "Starting sources update..."
-          echo "Checking connection files..."
-          cat .evidence/template/sources/trav/connection.yaml
-          cat .evidence/template/sources/trav/connection.options.yaml
-          echo "Running sources..."
           npm run sources || exit 1
           echo "Sources update completed successfully"
-          echo "Checking generated files..."
-          ls -la .evidence/template/sources/trav/
-          ls -la .evidence/meta/query-cache/
-          cat .evidence/meta/query-cache/hashes.json
 
       - name: Build project
         env:
           NODE_OPTIONS: --max-old-space-size=8192 --experimental-json-modules
         run: |
           echo "Starting build process..."
-          echo "Verifying sources directory..."
-          ls -la .evidence/template/sources/trav/
-          ls -la .evidence/meta/query-cache/
           npm run build || exit 1
           echo "Build completed successfully"
 
