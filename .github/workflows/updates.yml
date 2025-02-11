@@ -1,8 +1,8 @@
-name: 10m update
+name: 5m update
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
