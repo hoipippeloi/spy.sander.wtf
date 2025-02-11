@@ -17,6 +17,21 @@ jobs:
           curl -s ifconfig.me
           echo ""
 
+      - name: Install MySQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+
+      - name: Test MySQL Connection
+        run: |
+          echo "Testing MySQL connection..."
+          mysql -h ${{ secrets.DB_HOST }} \
+               -P ${{ secrets.DB_PORT }} \
+               -u ${{ secrets.DB_USER }} \
+               -p${{ secrets.DB_PASS }} \
+               -e "SELECT 1;" 2>/dev/null || { echo "Failed to connect to MySQL"; exit 1; }
+          echo "MySQL connection successful!"
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
         with:
