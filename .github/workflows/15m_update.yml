@@ -11,12 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Check External IP
-        run: |
-          echo "External IP Address:"
-          curl -s ifconfig.me
-          echo ""
-
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
         with:
@@ -25,21 +19,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run sources
+      - name: Build
         env:
-          NODE_OPTIONS: --max-old-space-size=8192 --experimental-json-modules
-        run: |
-          echo "Starting sources update..."
-          npm run sources || exit 1
-          echo "Sources update completed successfully"
-
-      - name: Build project
-        env:
-          NODE_OPTIONS: --max-old-space-size=8192 --experimental-json-modules
-        run: |
-          echo "Starting build process..."
-          npm run build || exit 1
-          echo "Build completed successfully"
+          NODE_OPTIONS: --max-old-space-size=4096 --experimental-json-modules
+        run: npm run sources && npm run build
 
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
